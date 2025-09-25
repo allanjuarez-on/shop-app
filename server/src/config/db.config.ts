@@ -1,10 +1,19 @@
-import 'dotenv/config';
-import mongoose, { connect } from 'mongoose';
+import 'dotenv/config'
+import mongoose, { connect } from 'mongoose'
 
 async function dbConnect(): Promise<void> {
-  mongoose.set('strictQuery', false);
-  const URI = <string>process.env.URI;
-  await connect(URI);
+  try {
+    mongoose.set('strictQuery', false)
+    const URI = process.env.URI
+
+    if (!URI) {
+      throw Error('No existe la llave de acceso (URI)')
+    }
+
+    await connect(URI)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
-export default dbConnect;
+export default dbConnect

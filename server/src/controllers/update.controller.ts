@@ -1,14 +1,14 @@
-import { updateProductDB } from '../services';
-import type { Request, Response } from 'express';
+import { updateProductDB } from '../services/product.service.js'
+import type { Request, Response } from 'express'
 
 export async function updateProductById(req: Request, res: Response) {
   try {
     if (!req.body) {
-      throw new Error('NO_BODY_CONTENT');
+      throw new Error('NO_BODY_CONTENT')
     }
 
     if (!req.params.productId) {
-      throw new Error('NO_PRODUCT_ID');
+      throw new Error('NO_PRODUCT_ID')
     }
 
     const newData = {
@@ -18,14 +18,14 @@ export async function updateProductById(req: Request, res: Response) {
       category: req.body.category || '',
       imageUrl: req.body.imageUrl || '',
       productSlug: req.body.productSlug || '',
-    };
+    }
 
-    const product = await updateProductDB(req.params.productId, newData);
+    const product = await updateProductDB(req.params.productId, newData)
 
-    console.log(product);
+    console.log(product)
 
-    res.status(200).send('Update');
+    res.status(200).send('Update')
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }

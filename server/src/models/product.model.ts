@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
-import type { ProductRaw } from '../interfaces';
+import { Schema, model } from 'mongoose'
+import type { ProductRaw } from '../interfaces/product.interface.js'
 
 const ProductSchema = new Schema<ProductRaw>(
   {
@@ -32,8 +32,8 @@ const ProductSchema = new Schema<ProductRaw>(
     timestamps: true,
     versionKey: false,
   }
-);
+)
 
-const ProductModel = model('products', ProductSchema);
+const ProductModel = model('products', ProductSchema)
 
-export default ProductModel;
+export default ProductModel

@@ -1,4 +1,4 @@
-import type { ProductAPI, ProductRaw } from '../interfaces';
+import type { ProductAPI, ProductRaw } from '../interfaces/product.interface.js';
 
 export function ProductAdapter(product: any): ProductRaw {
   return {
@@ -8,5 +8,5 @@ export function ProductAdapter(product: any): ProductRaw {
     category: product.category,
     imageUrl: product.image,
     productSlug: product.productSlug || '',
-  };
+  }
 }

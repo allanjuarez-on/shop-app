@@ -1,9 +1,9 @@
-import Router from 'express';
-import { getAllProducts, getProductById } from '../controllers';
+import Router from 'express'
+import { getAllProducts, getProductById } from '../controllers/get.controller.js'
 
-const router = Router();
+const router = Router()
 
-router.get('/', getAllProducts);
-router.get('/:productId', getProductById);
+router.get('/', getAllProducts)
+router.get('/:productId', getProductById)
 
-export { router };
+export { router }

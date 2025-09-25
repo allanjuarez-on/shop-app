@@ -1,106 +1,97 @@
-import { FAKESTOREAPI_BASE_URL } from '../constants';
-import { ProductModel } from '../models';
-import { createNewSlug } from './url.service';
-import { ProductAdapter } from '../util';
-import type { ProductAPI, ProductRaw } from '../interfaces';
+import ProductModel from '../models/product.model.js'
+import { createNewSlug } from './url.service.js'
+import { ProductAdapter } from '../util/adapter.util.js'
+import { FAKESTOREAPI_BASE_URL } from '../constants/global.js'
+import type { ProductAPI, ProductRaw } from '../interfaces/product.interface.js'
 
-async function fillDataBase(): Promise<void> {
+export async function fillDataBase(): Promise<void> {
   try {
-    const request = await fetch(`${FAKESTOREAPI_BASE_URL}?limit=10`);
-    const responseData: ProductAPI[] = await request.json();
+    const request = await fetch(`${FAKESTOREAPI_BASE_URL}?limit=10`)
+    const responseData: ProductAPI[] = await request.json()
 
     const preData = responseData.map((product) => {
-      const productSlug = createNewSlug(product.title);
+      const productSlug = createNewSlug(product.title)
       return {
         ...product,
         productSlug,
-      };
-    });
+      }
+    })
 
-    const adaptedData = preData.map((product) => ProductAdapter(product));
+    const adaptedData = preData.map((product) => ProductAdapter(product))
 
-    await ProductModel.insertMany(adaptedData);
-    console.log('Se insertaron los elementos en la base de datos con exito.');
+    await ProductModel.insertMany(adaptedData)
+    console.log('Se insertaron los elementos en la base de datos con exito.')
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
-async function getAllProductsDB() {
+export async function getAllProductsDB() {
   try {
-    const products = await ProductModel.find({});
-    return products;
+    const products = await ProductModel.find({})
+    return products
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
-async function getProductDBById(productId: string) {
+export async function getProductDBById(productId: string) {
   try {
-    const product = await ProductModel.findOne({ _id: productId });
-    return product;
+    const product = await ProductModel.findOne({ _id: productId })
+    return product
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
-async function createProductDB(product: Omit<ProductRaw, 'productSlug'>) {
+export async function createProductDB(product: Omit<ProductRaw, 'productSlug'>) {
   try {
-    const newSlug = createNewSlug(product.name);
+    const newSlug = createNewSlug(product.name)
     const data = {
       ...product,
       productSlug: newSlug,
-    };
-    const newProduct = await ProductModel.create(data);
-    return newProduct;
+    }
+    const newProduct = await ProductModel.create(data)
+    return newProduct
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
-async function updateProductDB(
+export async function updateProductDB(
   productId: string,
   newData: {
-    name: string;
-    description: string;
-    price: number;
-    category: string;
-    imageUrl: string;
-    productSlug: string;
+    name: string
+    description: string
+    price: number
+    category: string
+    imageUrl: string
+    productSlug: string
   }
 ) {
   try {
-    const newSlug = createNewSlug(newData.name);
+    const newSlug = createNewSlug(newData.name)
     const data = {
       ...newData,
       productSlug: newSlug,
-    };
+    }
 
     const product = await ProductModel.findByIdAndUpdate(
       { _id: productId },
       data,
       { new: true }
-    );
-    return product;
+    )
+    return product
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
-async function deleteProductDB(productId: string) {
+export async function deleteProductDB(productId: string) {
   try {
-    await ProductModel.deleteOne({ _id: productId });
-    console.log('Se elimino el producto con exito');
+    await ProductModel.deleteOne({ _id: productId })
+    console.log('Se elimino el producto con exito')
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
-
-export {
-  fillDataBase,
-  getAllProductsDB,
-  getProductDBById,
-  createProductDB,
-  updateProductDB,
-  deleteProductDB,
-};

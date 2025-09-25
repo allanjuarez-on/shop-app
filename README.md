@@ -2,6 +2,10 @@
 
 Aplicación que utiliza el stack **MERN**(MongoDB, ExpressJS, ReactJS, NodeJS) su objetivo es simular una tienda ficticia la cual permita realizar operaciones **CRUD**(Create, Read, Update, Delete). Los datos se obtienen a traves de la API [fakestoreapi](https://fakestoreapi.com/)
 
+![image-1](./assets/1.png)
+![image-2](./assets/2.png)
+![image-3](/assets/3.png)
+
 ## Características principales
 
 - Consumo de API externa: La aplicación obtiene de manera individual o en grupo los productos de la [api](https://fakestoreapi.com/).
